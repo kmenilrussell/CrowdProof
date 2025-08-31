@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  role      UserRole @default(UPLOADER)
+  facebookId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  evidence  Evidence[]
+  verifications Verification[]
+  auditLogs AuditLog[]
+
+  @@map("users")
+}
+
+model Evidence {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  type        MediaType
+  fileUrl     String
+  fileHash    String
+  fileSize    Int
+  metadata    Json
+  location    String?
+  latitude    Float?
+  longitude   Float?
+  status      EvidenceStatus @default(PENDING)
+  isAnonymous Boolean     @default(false)
+  uploaderId  String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  uploader    User        @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+  verifications Verification[]
+  auditLogs   AuditLog[]
+  shares      Share[]
+
+  @@map("evidence")
+}
+
+model Verification {
+  id         String          @id @default(cuid())
+  evidenceId String
+  verifierId String
+  type       VerificationType
+  status     VerificationStatus @default(PENDING)
+  comment    String?
+  confidence Int?
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  evidence   Evidence        @relation(fields: [evidenceId], references: [id], onDelete: Cascade)
+  verifier   User            @relation(fields: [verifierId], references: [id], onDelete: Cascade)
+
+  @@unique([evidenceId, verifierId])
+  @@map("verifications")
+}
+
+model Share {
+  id         String      @id @default(cuid())
+  evidenceId String
+  platform   SharePlatform
+  shareUrl   String?
+  status     ShareStatus @default(PENDING)
+  sharedAt   DateTime?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  evidence   Evidence    @relation(fields: [evidenceId], references: [id], onDelete: Cascade)
+
+  @@map("shares")
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  userId      String?
+  action      String
+  entityType  String
+  entityId    String
+  oldValues   Json?
+  newValues   Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+
+  user        User?       @relation(fields: [userId], references: [id])
+  evidence    Evidence?   @relation(fields: [entityId], references: [id])
+
+  @@map("audit_logs")
+}
+
+enum UserRole {
+  UPLOADER
+  VERIFIER
+  CURATOR
+  MODERATOR
+  ADMIN
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  DOCUMENT
+  AUDIO
+}
+
+enum EvidenceStatus {
+  PENDING
+  FLAGGED
+  VERIFIED
+  REJECTED
+  ARCHIVED
+}
+
+enum VerificationType {
+  COMMUNITY
+  EXPERT
+  MODERATOR
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
+
+enum SharePlatform {
+  FACEBOOK
+  TWITTER
+  WHATSAPP
+  TELEGRAM
+  EMAIL
+}
+
+enum ShareStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
