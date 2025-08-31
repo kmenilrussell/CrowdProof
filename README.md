@@ -139,5 +139,10 @@ Your input matters! Whether it’s UI enhancements or deeper privacy controls—
 
 <img width="1505" height="824" alt="Screenshot 2025-08-31 at 3 03 08 PM" src="https://github.com/user-attachments/assets/6b052657-6a1d-4645-91bc-ed7dd53db5f0" />
 <img width="1511" height="826" alt="Screenshot 2025-08-31 at 3 03 16 PM" src="https://github.com/user-attachments/assets/aebbfcbc-bf1a-4ab9-91d1-83dd96b651b5" />
+<img width="1512" height="819" alt="Screenshot 2025-08-31 at 3 39 42 PM" src="https://github.com/user-attachments/assets/482ba0e9-e5ae-43fa-b806-f787f826ad44" />
+<img width="1511" height="816" alt="Screenshot 2025-08-31 at 3 39 57 PM" src="https://github.com/user-attachments/assets/506e59db-34ea-4791-8927-93ae10a56174" />
+<img width="1156" height="847" alt="Screenshot 2025-08-31 at 3 40 11 PM" src="https://github.com/user-attachments/assets/2163cf4e-4841-420e-9e90-0b361828910f" />
+<img width="1141" height="855" alt="Screenshot 2025-08-31 at 3 40 31 PM" src="https://github.com/user-attachments/assets/15103bcc-d8a9-4e80-ae48-997d42b46be0" />
+<img width="1142" height="843" alt="Screenshot 2025-08-31 at 3 40 39 PM" src="https://github.com/user-attachments/assets/294ab2df-04d0-430f-8243-da70ad917057" />
 
 
